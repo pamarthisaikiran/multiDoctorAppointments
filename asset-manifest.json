@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/multiDoctorAppointments/static/css/main.ed234370.css",
+    "main.js": "/multiDoctorAppointments/static/js/main.9686c377.js",
+    "index.html": "/multiDoctorAppointments/index.html",
+    "main.ed234370.css.map": "/multiDoctorAppointments/static/css/main.ed234370.css.map",
+    "main.9686c377.js.map": "/multiDoctorAppointments/static/js/main.9686c377.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ed234370.css",
+    "static/js/main.9686c377.js"
+  ]
+}
