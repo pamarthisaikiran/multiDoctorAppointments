@@ -15,6 +15,7 @@ const AddDoctor = () => {
   const [messages, setMessages] = useState({});
   const [messageInputs, setMessageInputs] = useState({});
   const [weekOffToEdit, setWeekOffToEdit] = useState(null);
+  const [editingMessageId, setEditingMessageId] = useState(null);
 
   useEffect(() => {
     const fetchDoctors = async () => {
@@ -39,10 +40,18 @@ const AddDoctor = () => {
             doctorId: data.doctorId,
             slot: data.slot?.toDate ? data.slot.toDate() : new Date(data.slot),
             status: data.status || 'available',
-            message: data.message || '' // Add message field
+            message: data.message || ''
           };
         });
         setAppointments(appointmentsList);
+
+        const initialMessages = appointmentsList.reduce((acc, appointment) => {
+          if (appointment.message) {
+            acc[appointment.id] = appointment.message;
+          }
+          return acc;
+        }, {});
+        setMessages(initialMessages);
       } catch (error) {
         console.error('Error fetching appointments:', error);
       }
@@ -195,6 +204,31 @@ const AddDoctor = () => {
     }
   };
 
+  const handleEditMessage = (appointmentId) => {
+    setEditingMessageId(appointmentId);
+  };
+
+  const handleSaveMessage = async (appointmentId) => {
+    try {
+      const message = messageInputs[appointmentId] || '';
+      if (message) {
+        const appointmentRef = doc(db, 'appointments', appointmentId);
+        await updateDoc(appointmentRef, { message });
+        setMessages(prevMessages => ({ ...prevMessages, [appointmentId]: message }));
+        setMessageInputs(prevInputs => ({ ...prevInputs, [appointmentId]: '' }));
+        alert('Message updated successfully');
+      }
+      setEditingMessageId(null);
+    } catch (error) {
+      console.error('Error updating message:', error);
+      alert('Error updating message');
+    }
+  };
+
+  const handleCancelEditMessage = () => {
+    setEditingMessageId(null);
+  };
+
   const getDoctorAppointments = (doctorId) => {
     return appointments
       .filter(appointment => appointment.doctorId === doctorId && appointment.slot.toDateString() === new Date(selectedDate).toDateString())
@@ -242,7 +276,7 @@ const AddDoctor = () => {
           />
           {weekOffToEdit ? (
             <>
-              <button type="button" onClick={handleSaveEditedWeekOff}>Save</button>
+              <button className='save-but' type="button" onClick={handleSaveEditedWeekOff}>Save</button>
               <button type="button" onClick={() => setWeekOffToEdit(null)}>Cancel Edit</button>
             </>
           ) : (
@@ -258,7 +292,7 @@ const AddDoctor = () => {
             ))}
           </ul>
         </div>
-        <button type="submit">{editingDoctorId ? 'Update Doctor' : 'Add Doctor'}</button>
+        <button className='upd-but' type="submit">{editingDoctorId ? 'Update Doctor' : 'Add Doctor'}</button>
         {editingDoctorId && (
           <button type="button" onClick={() => setEditingDoctorId(null)}>Cancel</button>
         )}
@@ -289,7 +323,7 @@ const AddDoctor = () => {
           </ul>
         </>
       )}
-      
+
       <h3>Appointments</h3>
       <input
         type="date"
@@ -313,26 +347,36 @@ const AddDoctor = () => {
               <tbody>
                 {doctorAppointments.map((appointment) => (
                   <tr key={appointment.id}>
-                    <td>{appointment.slot.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
+                    <td>{appointment.slot.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit',hour12: true })}</td>
                     <td>{getAppointmentStatus(appointment.status)}</td>
                     <td>
                       {appointment.status === 'available' && (
                         <>
-                          <button onClick={() => updateAppointmentStatus(appointment.id, 'completed')}>Mark as Completed</button>
+                        
+                          <button className='m-c-button' onClick={() => updateAppointmentStatus(appointment.id, 'completed')}>Mark as Completed</button>
+                          
                           <button onClick={() => updateAppointmentStatus(appointment.id, 'canceled')}>Mark as Canceled</button>
                         </>
                       )}
-                      {messages[appointment.id] ? (
-                        <p>{messages[appointment.id]}</p>
-                      ) : (
+                      {(appointment.status === 'completed' || appointment.status === 'canceled') && (
                         <>
-                          <input
-                            type="text"
-                            value={messageInputs[appointment.id] || ''}
-                            onChange={(e) => setMessageInputs(prev => ({ ...prev, [appointment.id]: e.target.value }))}
-                            placeholder="Enter message"
-                          />
-                          <button onClick={() => handleAddMessage(appointment.id)}>Add Message</button>
+                          {editingMessageId === appointment.id ? (
+                            <>
+                              <input
+                                type="text"
+                                value={messageInputs[appointment.id] || messages[appointment.id] || ''}
+                                onChange={(e) => setMessageInputs(prev => ({ ...prev, [appointment.id]: e.target.value }))}
+                                placeholder="Edit message"
+                              />
+                              <button onClick={() => handleSaveMessage(appointment.id)}>Save Message</button>
+                             
+                            </>
+                          ) : (
+                            <>
+                              <p>{messages[appointment.id]}</p>
+                              <button onClick={() => handleEditMessage(appointment.id)}>Edit Message</button>
+                            </>
+                          )}
                         </>
                       )}
                     </td>
@@ -348,3 +392,4 @@ const AddDoctor = () => {
 };
 
 export default AddDoctor;
+

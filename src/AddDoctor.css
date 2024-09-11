@@ -132,4 +132,12 @@ body {
       padding: 6px;
     }
   }
-  
+  .m-c-button{
+    margin-right: 15px;
+  }
+  .save-but{
+    margin-right: 10px;
+  }
+  .upd-but{
+    margin-right: 10px;
+  }
