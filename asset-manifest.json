@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/multiDoctorAppointments/static/css/main.ed234370.css",
-    "main.js": "/multiDoctorAppointments/static/js/main.ded60d94.js",
+    "main.css": "/multiDoctorAppointments/static/css/main.ffe3675d.css",
+    "main.js": "/multiDoctorAppointments/static/js/main.2359b51e.js",
     "index.html": "/multiDoctorAppointments/index.html",
-    "main.ed234370.css.map": "/multiDoctorAppointments/static/css/main.ed234370.css.map",
-    "main.ded60d94.js.map": "/multiDoctorAppointments/static/js/main.ded60d94.js.map"
+    "main.ffe3675d.css.map": "/multiDoctorAppointments/static/css/main.ffe3675d.css.map",
+    "main.2359b51e.js.map": "/multiDoctorAppointments/static/js/main.2359b51e.js.map"
   },
   "entrypoints": [
-    "static/css/main.ed234370.css",
-    "static/js/main.ded60d94.js"
+    "static/css/main.ffe3675d.css",
+    "static/js/main.2359b51e.js"
   ]
 }
