@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, writeBatch, where } from 'firebase/firestore';
+import { collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, writeBatch, where , setDoc, getDoc} from 'firebase/firestore';
 import { db } from './firebase';
 import './AddDoctor.css';
 
@@ -172,10 +172,37 @@ const AddDoctor = () => {
     setWeekOffs(prev => prev.filter(existingWeekOff => existingWeekOff !== weekOff));
   };
 
+
+  const saveCanceledAppointment = async (appointment) => {
+    try {
+      // Define a reference to the collection where canceled appointments will be stored
+      const canceledAppointmentRef = doc(db, 'canceled_appointments', appointment.id);
+      // Store the canceled appointment in the separate collection
+      await setDoc(canceledAppointmentRef, appointment );
+    } catch (error) {
+      console.error('Error saving canceled appointment:', error);
+      alert('Error saving canceled appointment');
+    }
+  };
+
   const updateAppointmentStatus = async (appointmentId, newStatus) => {
     try {
       const appointmentRef = doc(db, 'appointments', appointmentId);
       await updateDoc(appointmentRef, { status: newStatus });
+       // Update the status of the appointment
+    await updateDoc(appointmentRef, { status: newStatus });
+
+    // Get the updated appointment data
+    const updatedAppointmentSnapshot = await getDoc(appointmentRef);
+    const updatedAppointment = { id: appointmentId, ...updatedAppointmentSnapshot.data() };
+
+    // Save to canceled appointments collection if the new status is 'canceled'
+    if (newStatus === 'canceled') {
+      await saveCanceledAppointment(updatedAppointment);
+    }
+
+
+
       setAppointments(prevAppointments =>
         prevAppointments.map(appointment =>
           appointment.id === appointmentId ? { ...appointment, status: newStatus } : appointment
