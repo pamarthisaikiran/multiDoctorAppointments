@@ -1,0 +1,73 @@
+/* src/DoctorsList.css */
+
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+  }
+  
+  h2 {
+    color: #007BFF;
+    margin-bottom: 20px;
+  }
+  
+  /* Container */
+  div {
+    margin: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* List styles */
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  li p {
+    margin: 0;
+    font-style: italic;
+    color: #6c757d; /* Light gray color for week-off text */
+  }
+  
+  a {
+    color: #007BFF;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+  }
+  
+  a:hover {
+    color: #0056b3;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 600px) {
+    div {
+      margin: 10px;
+      padding: 10px;
+    }
+  
+    li {
+      font-size: 14px;
+      padding: 10px;
+    }
+  
+    a {
+      font-size: 14px;
+    }
+  }
+  

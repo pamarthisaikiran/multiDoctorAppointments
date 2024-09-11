@@ -1,0 +1,107 @@
+/* DoctorProfile.css */
+
+/* Basic styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  div {
+    padding: 20px;
+  }
+  
+  h2, h3, h4 {
+    margin-top: 0;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  /* Styling for form elements */
+  input[type="text"], 
+  input[type="tel"], 
+  input[type="email"], 
+  input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 15px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Responsive layout */
+  @media (max-width: 768px) {
+    div {
+      padding: 10px;
+    }
+  
+    input[type="text"], 
+    input[type="tel"], 
+    input[type="email"], 
+    input[type="date"] {
+      font-size: 14px;
+    }
+  
+    button {
+      font-size: 14px;
+    }
+  
+    ul {
+      padding: 0;
+      list-style: none;
+    }
+  
+    li {
+      margin-bottom: 10px;
+    }
+  
+    label {
+      font-size: 14px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    input[type="text"], 
+    input[type="tel"], 
+    input[type="email"], 
+    input[type="date"] {
+      font-size: 12px;
+      padding: 8px;
+    }
+  
+    button {
+      font-size: 12px;
+      padding: 8px 15px;
+    }
+  
+    h2 {
+      font-size: 18px;
+    }
+  
+    h3 {
+      font-size: 16px;
+    }
+  
+    h4 {
+      font-size: 14px;
+    }
+  }
+  
